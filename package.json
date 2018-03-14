@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "dependencies": {
+    "canvas": "^1.6.9",
+    "moment": "^2.20.1"
+  }
+}

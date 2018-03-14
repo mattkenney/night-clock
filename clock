@@ -1,0 +1,15 @@
+#!/bin/sh
+dir=$(cd "$(dirname $(readlink -f "$0"))" && pwd)
+pid=$$
+while [ -n "$DISPLAY" ] && [ $pid != 1 ]; do
+    pid=$(ps -o ppid= -p $pid)
+    win=$(wmctrl -lp|awk "\$3==${pid## } {print \$1}" -)
+    if [ -n "$win" ]; then break; fi
+done
+if [ -n "$win" ]; then
+    wmctrl -i -r $win -b toggle,fullscreen
+    caffeinate "$dir/index.js"
+    wmctrl -i -r $win -b toggle,fullscreen
+else
+    "$dir/index.js"
+fi
